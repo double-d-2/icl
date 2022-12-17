@@ -14,7 +14,7 @@ const axiosService = {
     const config = {
       params,
       headers,
-      url: `${url}${endpoint}`,
+      url: `${url}/${endpoint}`,
     };
     return axiosInstance(config);
   },
