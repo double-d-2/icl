@@ -10,10 +10,9 @@ const axiosInstance = axios.create({
 });
 
 const axiosService = {
-  get: ({ url = API_URL, endpoint = "", params = {}, headers = {} }) => {
+  get: ({ url = API_URL, endpoint = "", params = {} }) => {
     const config = {
       params,
-      headers,
       url: `${url}/${endpoint}`,
     };
     return axiosInstance(config);
@@ -25,9 +24,15 @@ const axiosService = {
 
 axiosInstance.interceptors.response.use(
   (response) => {
+    /*
+      some global success handling can be added
+    */
     return response;
   },
   async (error) => {
+    /*
+      some global error handlin can be added
+    */
     return Promise.reject(error);
   }
 );

@@ -11,4 +11,12 @@ export default createBrowserRouter([
     path: "/quiz",
     element: <Quiz />,
   },
+  {
+    path: "/quiz-result",
+    element: "adasd",
+  },
+  {
+    path: "/*",
+    element: "NOT FOUND",
+  },
 ]);

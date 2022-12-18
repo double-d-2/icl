@@ -5,7 +5,6 @@ import { asyncGetQuizCategories, asyncGetQuiz } from "./quizOperations";
 const quizSlice = createSlice({
   name: "quiz",
   initialState,
-  //reducers: {},
   extraReducers: (builder) => {
     builder.addCase(asyncGetQuizCategories.fulfilled, (state, action) => {
       state.quizCategories = action.payload.trivia_categories;
@@ -19,7 +18,7 @@ const quizSlice = createSlice({
     });
 
     builder.addCase(asyncGetQuiz.fulfilled, (state, action) => {
-      state.quizData = action.payload.trivia_categories;
+      state.quizData = action.payload.results;
       state.quizLoading = false;
     });
     builder.addCase(asyncGetQuiz.rejected, (state) => {
