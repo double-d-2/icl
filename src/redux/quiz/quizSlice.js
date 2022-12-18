@@ -5,6 +5,11 @@ import { asyncGetQuizCategories, asyncGetQuiz } from "./quizOperations";
 const quizSlice = createSlice({
   name: "quiz",
   initialState,
+  reducers: {
+    setQuizResult: (state, action) => {
+      state.quizResult = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(asyncGetQuizCategories.fulfilled, (state, action) => {
       state.quizCategories = action.payload.trivia_categories;
@@ -30,6 +35,6 @@ const quizSlice = createSlice({
   },
 });
 
-//export const { increment, decrement, incrementByAmount } = quizSlice.actions
+export const { setQuizResult } = quizSlice.actions;
 
 export default quizSlice;

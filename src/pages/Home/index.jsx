@@ -5,22 +5,31 @@ import AppBox from "../../components/AppBox";
 import AppButton from "../../components/AppButton";
 import AppSelect from "../../components/AppSelect";
 import AppTyphography from "../../components/AppTypography";
+import usePrevious from "../../hooks/usePrevious";
 import { asyncGetQuizCategories, quizSeletors } from "../../redux/quiz";
 import { MainBlock } from "./homeStyles";
 
-const { getQuizCategories } = quizSeletors;
+const { getQuizCategories, getQuizCategoriesLoading } = quizSeletors;
 const Home = () => {
   const dispatch = useDispatch();
 
   const [category, setCategory] = useState("");
   const quizCategories = useSelector(getQuizCategories);
+  const categoreisLoading = useSelector(getQuizCategoriesLoading);
+  const prevLoading = usePrevious(categoreisLoading);
   useEffect(() => {
     dispatch(asyncGetQuizCategories());
   }, [dispatch]);
   const handleCategorySelect = (e) => {
     setCategory(e.target.value);
   };
-  return (
+  if (categoreisLoading) {
+    return "loading";
+  }
+  const noData = prevLoading && !categoreisLoading && !quizCategories.length;
+  return noData ? (
+    "No Categoreis Data Try Again Later"
+  ) : (
     <AppBox className="app_page app_home_page" component={MainBlock}>
       <AppTyphography className="page_title" variant="h3">
         Trivia App
@@ -35,7 +44,6 @@ const Home = () => {
       </AppBox>
       <AppButton
         component={Link}
-        state={{ any: "any" }}
         to={`/quiz/?category=${category}`}
         disabled={!category}
         variant="contained"

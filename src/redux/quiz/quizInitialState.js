@@ -3,6 +3,7 @@ const quizInitialState = {
   quizCategories: [],
   quizLoading: false,
   quizData: [],
+  quizResult: {},
 };
 
 export default quizInitialState;

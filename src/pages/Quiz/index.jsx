@@ -8,7 +8,7 @@ import AppTyphography from "../../components/AppTypography";
 import { AMOUNT_OF_QUIZ_QUESTIONS } from "../../constants";
 import { arrayShuffle } from "../../helpers/arrayHelpers";
 import usePrevious from "../../hooks/usePrevious";
-import { asyncGetQuiz, quizSeletors } from "../../redux/quiz";
+import { asyncGetQuiz, quizSeletors, setQuizResult } from "../../redux/quiz";
 const { getQuizData, getQuizLoading } = quizSeletors;
 
 const Quiz = () => {
@@ -41,13 +41,13 @@ const Quiz = () => {
   }, [dispatch, quizCategory]);
 
   const currentData = quizData[quizStep];
-  const answers = currentData
-    ? [currentData.correct_answer, ...currentData.incorrect_answers]
-    : [];
 
   const shuffledanswers = useMemo(() => {
+    const answers = currentData
+      ? [currentData.correct_answer, ...currentData.incorrect_answers]
+      : [];
     return arrayShuffle(answers);
-  }, [answers]);
+  }, [currentData]);
 
   const handleAnswerClick = (answer) => {
     const { correct_answer, question } = currentData;
@@ -63,7 +63,13 @@ const Quiz = () => {
     if (quizStep === quizData.length - 1) {
       quizQollectedData.current.endedAt = Date.now();
       handleScoreSaving();
-      navigate("/quiz/result");
+      dispatch(
+        setQuizResult({
+          totalQuestionsCount: quizData.length,
+          correctAnswersCount: quizQollectedData.current.correctAnswersCount,
+        })
+      );
+      navigate("/quiz-result");
     } else {
       setQuizStep(quizStep + 1);
     }
