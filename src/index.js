@@ -8,18 +8,16 @@ import { RouterProvider } from "react-router-dom";
 import AppRouter from "./router";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
+import AppLoader from "./components/AppLoader";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <Suspense>
+      <Suspense fallback={<AppLoader />}>
         <RouterProvider router={AppRouter} />
       </Suspense>
     </ThemeProvider>
   </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

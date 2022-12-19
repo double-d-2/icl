@@ -24,12 +24,10 @@ const Home = () => {
     setCategory(e.target.value);
   };
   if (categoreisLoading) {
-    return <AppLoader open={true} />;
+    return <AppLoader />;
   }
   const noData = prevLoading && !categoreisLoading && !quizCategories.length;
-  return noData ? (
-    "No Categoreis Data Try Again Later"
-  ) : (
+  return !noData ? (
     <AppBox
       className="app_page app_home_page"
       display="flex"
@@ -58,7 +56,7 @@ const Home = () => {
       </AppBox>
       <AppButton
         component={Link}
-        to={`/quiz/?category=${category}`}
+        to={`/quiz?category=${category}`}
         disabled={!category}
         variant="contained"
         sx={{ width: 150 }}
@@ -66,6 +64,16 @@ const Home = () => {
         Start
       </AppButton>
     </AppBox>
+  ) : (
+    <AppTyphography
+      align={"center"}
+      className="page_title"
+      variant="h6"
+      color="primary"
+      mb={5}
+    >
+      No Categoreis Data Try Again Later
+    </AppTyphography>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { SelectWrapper, MenuItemWrapper } from "./styles";
@@ -52,4 +52,4 @@ const AppSelect = (props) => {
   );
 };
 
-export default memo(AppSelect);
+export default AppSelect;

@@ -1,14 +1,13 @@
 import { useTheme } from "@mui/material";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import AppBox from "../../components/AppBox";
 import AppButton from "../../components/AppButton";
 import AppDecorLabel from "../../components/AppDecorLabel";
 import AppLoader from "../../components/AppLoader";
 import AppTyphography from "../../components/AppTypography";
 import { AMOUNT_OF_QUIZ_QUESTIONS } from "../../constants";
-import { arrayShuffle } from "../../helpers/arrayHelpers";
 import usePrevious from "../../hooks/usePrevious";
 import { asyncGetQuiz, quizSeletors, setQuizResult } from "../../redux/quiz";
 const { getQuizData, getQuizLoading } = quizSeletors;
@@ -45,13 +44,9 @@ const Quiz = () => {
 
   const currentData = quizData[quizStep];
 
-  const shuffledanswers = useMemo(() => {
-    const answers = currentData
-      ? [currentData.correct_answer, ...currentData.incorrect_answers]
-      : [];
-    return arrayShuffle(answers);
-  }, [currentData]);
-
+  const answers = currentData
+    ? [currentData.correct_answer, ...currentData.incorrect_answers]
+    : [];
   const handleAnswerClick = (answer) => {
     const { correct_answer, question } = currentData;
     quizQollectedData.current.data.push({
@@ -105,7 +100,7 @@ const Quiz = () => {
   const noData =
     (prevLoading && !quizDataLoading && !quizData.length) || !quizCategory;
   if (quizDataLoading) {
-    return <AppLoader open={true} />;
+    return <AppLoader />;
   }
   return !noData ? (
     <AppBox
@@ -143,7 +138,7 @@ const Quiz = () => {
         gap={6}
         flexWrap="wrap"
       >
-        {shuffledanswers.map((item) => {
+        {answers.map((item) => {
           return (
             <AppButton
               variant="outlined"
@@ -163,7 +158,24 @@ const Quiz = () => {
       </AppBox>
     </AppBox>
   ) : (
-    "Must Be Some no data view"
+    <AppBox align="center">
+      <AppTyphography
+        className="page_title"
+        variant="h6"
+        mb={5}
+        color="primary"
+      >
+        No Data Try Again Later
+      </AppTyphography>
+      <AppButton
+        component={Link}
+        to={`/`}
+        variant="contained"
+        sx={{ width: 150 }}
+      >
+        Home
+      </AppButton>
+    </AppBox>
   );
 };
 
