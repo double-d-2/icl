@@ -1,8 +1,7 @@
-import * as React from "react";
+import React, { memo } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { SelectWrapper, MenuItemWrapper } from "./styles";
 
 const AppSelect = (props) => {
   const {
@@ -11,18 +10,16 @@ const AppSelect = (props) => {
     value = "",
     selectList = [],
     handleChange,
-    placeholder = "placeholder",
-
-    //multiple = false,
+    placeholder = "Select",
     ...rest
   } = props;
 
   const renderSelectItems = () => {
     return selectList.map((item) => {
       return (
-        <MenuItem key={item[idField]} value={item[idField]}>
+        <MenuItemWrapper key={item[idField]} value={item[idField]}>
           {item[nameField]}
-        </MenuItem>
+        </MenuItemWrapper>
       );
     });
   };
@@ -32,7 +29,7 @@ const AppSelect = (props) => {
       {placeholder && !value && (
         <InputLabel shrink={false}>{placeholder}</InputLabel>
       )}
-      <Select
+      <SelectWrapper
         {...rest}
         id="demo-simple-select"
         value={value}
@@ -40,7 +37,8 @@ const AppSelect = (props) => {
         MenuProps={{
           PaperProps: {
             sx: {
-              maxHeight: 222,
+              maxHeight: 220,
+              maxWidth: 320,
               borderRadius: "18px",
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.04)",
               marginTop: 2,
@@ -49,9 +47,9 @@ const AppSelect = (props) => {
         }}
       >
         {renderSelectItems()}
-      </Select>
+      </SelectWrapper>
     </FormControl>
   );
 };
 
-export default AppSelect;
+export default memo(AppSelect);

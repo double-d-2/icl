@@ -15,15 +15,30 @@ const QuizResult = () => {
     }
   }, [navigate, quizResult]);
   return (
-    <AppBox>
-      <AppTyphography className="page_title" variant="h3">
-        Trivia App
+    <AppBox
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      pt={[12, 20, 33]}
+    >
+      <AppTyphography
+        className="page_title"
+        variant="h2"
+        color="primary"
+        mb={[9, 18, 36]}
+      >
+        Thank You
       </AppTyphography>
-      <AppTyphography>
+      <AppTyphography variant="h6" mb={15}>
         Your Score is:{" "}
         {`${quizResult.correctAnswersCount}/${quizResult.totalQuestionsCount}`}
       </AppTyphography>
-      <AppButton component={Link} to={`/`} variant="contained">
+      <AppButton
+        component={Link}
+        to={`/`}
+        variant="contained"
+        sx={{ width: 150 }}
+      >
         Home
       </AppButton>
     </AppBox>

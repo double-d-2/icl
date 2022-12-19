@@ -1,7 +1,7 @@
-import Button from "@mui/material/Button";
+import Wrapper from "./styles";
 
-const AppButton = ({ ...rest }) => {
-  return <Button {...rest} />;
+const AppButton = ({ ...props }) => {
+  return <Wrapper {...props} />;
 };
 
 export default AppButton;

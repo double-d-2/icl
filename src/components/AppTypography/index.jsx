@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
-const AppTyphography = ({ className = "", ...props }) => {
-  return <Typography {...props} className={`${className} app_typhography`} />;
+const AppTyphography = ({ ...props }) => {
+  return <Typography {...props} />;
 };
 
 export default AppTyphography;

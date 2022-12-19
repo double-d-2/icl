@@ -1,8 +1,10 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home";
-import Quiz from "../pages/Quiz";
-import QuizResult from "../pages/QuizResult";
-import QuizScore from "../pages/QuizScore";
+
+const Home = lazy(() => import("../pages/Home"));
+const Quiz = lazy(() => import("../pages/Quiz"));
+const QuizResult = lazy(() => import("../pages/QuizResult"));
+const QuizScoreHistory = lazy(() => import("../pages/QuizScoreHistory"));
 
 export default createBrowserRouter([
   {
@@ -18,8 +20,8 @@ export default createBrowserRouter([
     element: <QuizResult />,
   },
   {
-    path: "/quiz-score",
-    element: <QuizScore />,
+    path: "/quiz-score-history",
+    element: <QuizScoreHistory />,
   },
   {
     path: "/*",

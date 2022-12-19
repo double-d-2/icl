@@ -1,9 +1,11 @@
+import { useTheme } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AppBox from "../../components/AppBox";
 import AppButton from "../../components/AppButton";
 import AppDecorLabel from "../../components/AppDecorLabel";
+import AppLoader from "../../components/AppLoader";
 import AppTyphography from "../../components/AppTypography";
 import { AMOUNT_OF_QUIZ_QUESTIONS } from "../../constants";
 import { arrayShuffle } from "../../helpers/arrayHelpers";
@@ -25,6 +27,7 @@ const Quiz = () => {
     startedAt: Date.now(),
     endedAt: null,
   });
+  const theme = useTheme();
 
   const quizCategory = searchParams.get("category");
 
@@ -95,20 +98,51 @@ const Quiz = () => {
       );
     }
   };
-
-  const noData = prevLoading && quizDataLoading && !quizData.length;
+  const getQuestionIndex = () => {
+    const step = quizStep + 1;
+    return step < 10 ? "0" + step : step;
+  };
+  const noData =
+    (prevLoading && !quizDataLoading && !quizData.length) || !quizCategory;
   if (quizDataLoading) {
-    return "Loading";
+    return <AppLoader open={true} />;
   }
   return !noData ? (
-    <AppBox>
+    <AppBox
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      pt={[9, 18, 36]}
+    >
       <AppTyphography
+        className="page_title"
+        variant="h2"
+        mb={5}
+        color="primary"
+      >
+        Question {getQuestionIndex()}
+      </AppTyphography>
+      <AppDecorLabel
+        backgroundColor={theme.palette.label[currentData?.difficulty]}
+        mb={22}
+      >
+        {currentData?.difficulty}
+      </AppDecorLabel>
+      <AppTyphography
+        variant="h6"
+        align="center"
         dangerouslySetInnerHTML={{
           __html: currentData?.question,
         }}
+        mb={18}
       />
-      <AppDecorLabel>{currentData?.difficulty}</AppDecorLabel>
-      <AppBox className="answers_section" display="flex">
+      <AppBox
+        className="answers_section"
+        display="flex"
+        justifyContent="center"
+        gap={6}
+        flexWrap="wrap"
+      >
         {shuffledanswers.map((item) => {
           return (
             <AppButton
@@ -116,7 +150,13 @@ const Quiz = () => {
               key={item}
               onClick={() => handleAnswerClick(item)}
             >
-              {item}
+              <AppBox
+                minWidth={[180, 240, 290]}
+                component="span"
+                dangerouslySetInnerHTML={{
+                  __html: item,
+                }}
+              />
             </AppButton>
           );
         })}

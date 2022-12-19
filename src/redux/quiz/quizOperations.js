@@ -11,7 +11,7 @@ export const asyncGetQuizCategories = createAsyncThunk(
 
       return data;
     } catch (e) {
-      return;
+      throw new Error(e);
     }
   }
 );
@@ -26,7 +26,7 @@ export const asyncGetQuiz = createAsyncThunk(
 
       return data;
     } catch (e) {
-      return;
+      throw new Error(e);
     }
   }
 );

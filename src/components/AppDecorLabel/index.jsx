@@ -1,17 +1,8 @@
-import AppBox from "../AppBox";
+import AppTyphography from "../AppTypography";
+import Wrapper from "./styles";
 
 const AppDecorLabel = ({ ...rest }) => {
-  return (
-    <AppBox
-      component="span"
-      {...rest}
-      backgroundColor={"red"}
-      borderRadius="12px 0px 12px 12px"
-      padding="15px"
-      display="inline-block"
-      margin="15px"
-    />
-  );
+  return <Wrapper component={AppTyphography} {...rest} />;
 };
 
 export default AppDecorLabel;
